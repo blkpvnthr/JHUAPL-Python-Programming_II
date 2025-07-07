@@ -10,7 +10,7 @@ Whether you're supporting R&D projects, building internal tools, or analyzing sc
 
 ## 🧠 What You'll Learn
 
-### ✅ Core Topics
+### Core Topics
 - **Advanced String Handling**
   - Indexing, splitting, iteration, and formatting
 - **Data Structures**
