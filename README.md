@@ -56,6 +56,4 @@ After completing this course, you'll be equipped to:
 - You'll gain experience with real-world code validation techniques, including JSON schema checks and secure programming approaches.
 - This course aligns with APL’s mission to empower interns through technical excellence and innovation.
 
----
 
-**Let’s build something meaningful together — one line of code at a time.**
