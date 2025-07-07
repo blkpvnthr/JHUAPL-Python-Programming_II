@@ -1,4 +1,4 @@
-# Advanced Python Programming for JHU/APL Interns 💻
+# Advanced Python Programming for JHU/APL Interns  💻
 
 > **Prerequisite**: Python Programming I (Beginner Concepts)
 
