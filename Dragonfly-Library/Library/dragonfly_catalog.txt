@@ -1,0 +1,30 @@
+Mass Spectrometer:
+    Development: NASA Goddard, CNES
+    Job: Analyze chemical components for life.
+    Acronyms: {'DraMS': '001'}
+
+Drill for Acquisition of Complex Organics:
+    Development: Honeybee Robotics
+    Job: Drill and transfer samples.
+    Acronyms: {'DrACO': '002'}
+
+Gamma-ray and Neutron Spectrometer:
+    Development: JHU APL, LLNL
+    Job: Measure elemental composition.
+    Acronyms: {'DraGNS': '003'}
+
+Geophysics and Meteorology Package:
+    Development: JHU APL, JAXA
+    Job: Monitor atmosphere and seismic activity.
+    Acronyms: {'DraGMet': '004'}
+
+Camera Suite:
+    Development: Malin Space Science Systems
+    Job: Surface and aerial imaging.
+    Acronyms: {'DragonCam': '005'}
+
+NewInstrument:
+    Development: ESA
+    Job: Analyze Titan surface composition
+    Acronyms: {'NIT': '006'}
+

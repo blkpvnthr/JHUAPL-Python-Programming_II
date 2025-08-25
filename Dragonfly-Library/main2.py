@@ -1,0 +1,179 @@
+import json
+import os
+
+# ------------------------
+# Dragonfly Library System
+# ------------------------
+dragonflylibrary = {}
+
+# ------------------------
+# Session 1 - Add instrument
+# ------------------------
+def add_instrument(library):
+    name = input("Enter instrument name: ").strip()
+    if name in library:
+        print("Instrument already exists.")
+    else:
+        development = input("Enter development location: ").strip()
+        job = input("Enter job at Titan: ").strip()
+        library[name] = {
+            "Development": development,
+            "Job": job,
+            "Acronyms": {}
+        }
+    return library
+
+# ------------------------
+# Session 2 - Add acronym & IAID
+# ------------------------
+def add_acronym(library):
+    name = input("Enter instrument name: ").strip()
+    if name in library:
+        acronym = input("Enter acronym: ").strip().upper()
+        iaid = input("Enter instrument acronym ID (e.g., 01, 02, 03...): ").strip()
+        library[name]["Acronyms"][acronym] = iaid
+    else:
+        print("Instrument not found.")
+    return library
+
+# ------------------------
+# Search for an instrument
+# ------------------------
+def search_instrument(library):
+    name = input("Enter instrument name to search: ").strip()
+    if name in library:
+        print(f"\n{name}:")
+        for key, value in library[name].items():
+            print(f"  {key}: {value}")
+    else:
+        print("Instrument not found.")
+
+# ------------------------
+# Update an instrument
+# ------------------------
+def update_instrument(library):
+    name = input("Enter instrument name to update: ").strip()
+    if name not in library:
+        print("Instrument not found.")
+        return
+
+    current = library[name]
+    print("Leave blank to keep current value.")
+    development = input(f"Development [{current['Development']}]: ").strip() or current['Development']
+    job = input(f"Job at Titan [{current['Job']}]: ").strip() or current['Job']
+    library[name]["Development"] = development
+    library[name]["Job"] = job
+
+# ------------------------
+# Base Counter Class
+# ------------------------
+class DragonflyLibraryCounter:
+    def __init__(self, library):
+        self.library = library
+
+    def count_items(self):
+        return sum(len(instr["Acronyms"]) for instr in self.library.values())
+
+    def count_instruments(self):
+        return len(self.library)
+
+    def count_multi_acronym(self):
+        return sum(1 for instr in self.library.values() if len(instr["Acronyms"]) > 1)
+
+    def count_by_development(self, location):
+        return sum(1 for instr in self.library.values() if instr["Development"].lower() == location.lower())
+
+    def count_by_job(self, keyword):
+        return sum(1 for instr in self.library.values() if keyword.lower() in instr["Job"].lower())
+
+# ------------------------
+# Save the catalog
+# ------------------------
+def save_catalog(library):
+    try:
+        os.makedirs("Library", exist_ok=True)
+        filepath = os.path.join("Library", "dragonfly_catalog.txt")
+        with open(filepath, 'w', encoding='utf-8') as file:
+            for name, details in library.items():
+                file.write(f"{name}:\n")
+                for key, value in details.items():
+                    file.write(f"    {key}: {value}\n")
+                file.write("\n")
+        print(f"[✓] Catalog saved to {filepath}")
+    except Exception as e:
+        print(f"[!] Error saving catalog: {e}")
+
+# ------------------------
+# Sample data
+# ------------------------
+dragonflylibrary["Mass Spectrometer"] = {
+    "Development": "NASA Goddard, CNES",
+    "Job": "Analyze chemical components for life.",
+    "Acronyms": {"DraMS": "001"}
+}
+dragonflylibrary["Drill for Acquisition of Complex Organics"] = {
+    "Development": "Honeybee Robotics",
+    "Job": "Drill and transfer samples.",
+    "Acronyms": {"DrACO": "002"}
+}
+dragonflylibrary["Gamma-ray and Neutron Spectrometer"] = {
+    "Development": "JHU APL, LLNL",
+    "Job": "Measure elemental composition.",
+    "Acronyms": {"DraGNS": "003"}
+}
+dragonflylibrary["Geophysics and Meteorology Package"] = {
+    "Development": "JHU APL, JAXA",
+    "Job": "Monitor atmosphere and seismic activity.",
+    "Acronyms": {"DraGMet": "004"}
+}
+dragonflylibrary["Camera Suite"] = {
+    "Development": "Malin Space Science Systems",
+    "Job": "Surface and aerial imaging.",
+    "Acronyms": {"DragonCam": "005"}
+}
+
+# ------------------------
+# Main Interaction Loop
+# ------------------------
+def main():
+    while True:
+        print("\n--- MENU ---")
+        print("1) Add instrument")
+        print("2) Add acronym")
+        print("3) Search instrument")
+        print("4) Update instrument")
+        print("5) Counts")
+        print("6) Save catalog")
+        print("7) Quit")
+        choice = input("Select an option: ").strip()
+
+        if choice == "1":
+            add_instrument(dragonflylibrary)
+        elif choice == "2":
+            add_acronym(dragonflylibrary)
+        elif choice == "3":
+            search_instrument(dragonflylibrary)
+        elif choice == "4":
+            update_instrument(dragonflylibrary)
+        elif choice == "5":
+            counter = DragonflyLibraryCounter(dragonflylibrary)
+            print(f"Total IAIDs: {counter.count_items()}")
+            print(f"Total Instruments: {counter.count_instruments()}")
+            print(f"Instruments with multiple acronyms: {counter.count_multi_acronym()}")
+            dev = input("Development location to count (or blank): ").strip()
+            if dev:
+                print(f"  Instruments developed at '{dev}': {counter.count_by_development(dev)}")
+            job = input("Job keyword to count (or blank): ").strip()
+            if job:
+                print(f"  Instruments with job containing '{job}': {counter.count_by_job(job)}")
+        elif choice == "6":
+            save_catalog(dragonflylibrary)
+        elif choice == "7":
+            print("Exiting...")
+            break
+        else:
+            print("[!] Invalid option.")
+
+# Run the app
+if __name__ == "__main__":
+    main()
