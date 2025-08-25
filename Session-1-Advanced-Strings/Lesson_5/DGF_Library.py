@@ -1,6 +1,5 @@
 """
-In this session, you will start building a simple Python application to manage
-the scientific instruments aboard NASA's Dragonfly mission to Titan.
+In this session, you will start building a simple Python application to manage the scientific instruments aboard NASA's Dragonfly mission to Titan.
 """
 import os
 
@@ -56,8 +55,8 @@ def save_catalog(filename=None):
     try:
         if filename is None:
             filename = "dragonfly_catalog.txt"
-        os.makedirs("Lesson_5", exist_ok=True)
-        filepath = os.path.join("Lesson_5", filename)
+        os.makedirs("Dragonfly-Library", exist_ok=True)
+        filepath = os.path.join("Dragonfly-Library", filename)
 
         with open(filepath, 'w', encoding='utf-8') as file:
             for acronym, details in dragonflylibrary.items():
